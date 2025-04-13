@@ -1,18 +1,8 @@
-const http = require("http");
+const app = require("./server");
 
-const server = http.createServer((req, res) => {
-  if (req.method === "GET" && req.url === "/") {
-    res.statusCode = 200;
-    res.setHeader("Content-Type", "application/json");
-    res.end(JSON.stringify({ message: "Hello World" }));
-    return;
-  }
+const PORT = process.env.PORT || 3000;
+const HOST = process.env.HOST || "localhost";
 
-  res.statusCode = 404;
-  res.setHeader("Content-Type", "application/json");
-  res.end(JSON.stringify({ message: "Internal Server Error" }));
-});
-
-server.listen(3000, () => {
-  console.log("Server running at http://localhost:3000/");
+app.listen(PORT, HOST, () => {
+  console.log(`Server running at http://${HOST}:${PORT}/`);
 });
