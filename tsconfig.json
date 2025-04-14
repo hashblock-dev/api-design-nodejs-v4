@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "sourceMap": true, // Generate corresponding .map files
+    "outDir": "dist", // Redirect output structure to the directory
+    "esModuleInterop": true, // Enable compatibility with CommonJS and ES Modules
+    "lib": ["ESNext"] // Specify library files to be included in the compilation
+  }
+}
