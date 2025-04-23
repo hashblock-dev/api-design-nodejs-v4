@@ -1,13 +1,21 @@
 import { Router } from "express";
+import { validateRequest } from "./middlewares/validateRequest";
+import { updateProductSchema } from "./schemas/product.schema";
 
 const router = Router();
 
 // Define routes for the product resource
 router.get("/product", (req, res) => {
-    res.json({ message: "Get all products" });
+  res.json({ message: "Get all products" });
 });
 router.get("/product/:id", () => {});
-router.put("/product/:id", () => {});
+router.put("/product/:id", validateRequest(updateProductSchema), (req, res) => {
+  const { id } = req.params;
+  const { name } = req.body;
+
+  // Simulate updating a product
+  res.json({ message: `Product ${id} updated`, name });
+});
 router.post("/product", () => {});
 router.delete("/product/:id", () => {});
 
