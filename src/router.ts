@@ -1,6 +1,10 @@
 import { Router } from "express";
+import jwt from "jsonwebtoken";
 import { validateRequest } from "./middlewares/validateRequest";
-import { updateProductSchema } from "./schemas/product.schema";
+import {
+  createProductSchema,
+  updateProductSchema,
+} from "./schemas/product.schema";
 
 const router = Router();
 
@@ -16,7 +20,17 @@ router.put("/product/:id", validateRequest(updateProductSchema), (req, res) => {
   // Simulate updating a product
   res.json({ message: `Product ${id} updated`, name });
 });
-router.post("/product", () => {});
+router.post("/product", validateRequest(createProductSchema), (req, res) => {
+  const { name } = req.body;
+  const belongsToId = ((req as any).user as jwt.JwtPayload).id;
+
+  // Simulate creating a product
+  res.json({
+    message: `Product ${name} which belongs to ${belongsToId} created`,
+    belongsToId,
+    name,
+  });
+});
 router.delete("/product/:id", () => {});
 
 // Define routes for the update resource
