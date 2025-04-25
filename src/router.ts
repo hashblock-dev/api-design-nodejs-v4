@@ -5,6 +5,10 @@ import {
   createProductSchema,
   updateProductSchema,
 } from "./schemas/product.schema";
+import {
+  createUpdateSchema,
+  updateUpdateSchema,
+} from "./schemas/update.schema";
 
 const router = Router();
 
@@ -36,8 +40,35 @@ router.delete("/product/:id", () => {});
 // Define routes for the update resource
 router.get("/update", () => {});
 router.get("/update/:id", () => {});
-router.put("/update/:id", () => {});
-router.post("/update", () => {});
+router.put("/update/:id", validateRequest(updateUpdateSchema), (req, res) => {
+  const { title, body, status, version } = req.body;
+  const { id: productId } = req.params;
+
+  // TODO: Check that product belongs to the user
+  // Simulate updating an update
+  res.json({
+    message: `Update ${title} ${body} with status: ${status} and version: ${version} based on product ${productId} has been updated`,
+    title,
+    body,
+    status,
+    version,
+    productId,
+  });
+});
+router.post("/update", validateRequest(createUpdateSchema), (req, res) => {
+  const { title, body, status, version, productId } = req.body;
+
+  // TODO: Check that product belongs to the user
+  // Simulate updating an update
+  res.json({
+    message: `Update ${title} ${body} with status: ${status} and version: ${version} based on product ${productId} has been created`,
+    title,
+    body,
+    status,
+    version,
+    productId,
+  });
+});
 router.delete("/update/:id", () => {});
 
 // Define routes for the update point resource
