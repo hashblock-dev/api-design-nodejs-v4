@@ -9,32 +9,22 @@ import {
   createUpdateSchema,
   updateUpdateSchema,
 } from "./schemas/update.schema";
-import { getProducts } from "./handlers/product";
+import {
+  createProduct,
+  deleteProduct,
+  getProduct,
+  getProducts,
+  updateProduct,
+} from "./handlers/product";
 
 const router = Router();
 
 // Define routes for the product resource
 router.get("/product", getProducts);
-router.get("/product/:id", () => {});
-router.put("/product/:id", validateRequest(updateProductSchema), (req, res) => {
-  const { id } = req.params;
-  const { name } = req.body;
-
-  // Simulate updating a product
-  res.json({ message: `Product ${id} updated`, name });
-});
-router.post("/product", validateRequest(createProductSchema), (req, res) => {
-  const { name } = req.body;
-  const belongsToId = ((req as any).user as jwt.JwtPayload).id;
-
-  // Simulate creating a product
-  res.json({
-    message: `Product ${name} which belongs to ${belongsToId} created`,
-    belongsToId,
-    name,
-  });
-});
-router.delete("/product/:id", () => {});
+router.get("/product/:id", getProduct);
+router.put("/product/:id", validateRequest(updateProductSchema), updateProduct);
+router.post("/product", validateRequest(createProductSchema), createProduct);
+router.delete("/product/:id", deleteProduct);
 
 // Define routes for the update resource
 router.get("/update", () => {});
