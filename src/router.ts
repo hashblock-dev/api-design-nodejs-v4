@@ -9,13 +9,12 @@ import {
   createUpdateSchema,
   updateUpdateSchema,
 } from "./schemas/update.schema";
+import { getProducts } from "./handlers/product";
 
 const router = Router();
 
 // Define routes for the product resource
-router.get("/product", (req, res) => {
-  res.json({ message: "Get all products" });
-});
+router.get("/product", getProducts);
 router.get("/product/:id", () => {});
 router.put("/product/:id", validateRequest(updateProductSchema), (req, res) => {
   const { id } = req.params;
