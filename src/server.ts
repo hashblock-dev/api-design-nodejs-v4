@@ -24,6 +24,13 @@ app.get("/", (req, res, next) => {
   }, 1);
 });
 
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "OK",
+    message: "Server is running", // Add a message to the response
+  });
+});
+
 app.use("/api", checkAuthentication, router);
 
 app.post("/user", createNewUser);
