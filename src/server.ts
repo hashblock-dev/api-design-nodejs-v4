@@ -18,8 +18,10 @@ app.use(express.urlencoded({ extended: true }));
 // Enable CORS for all requests
 app.use(cors());
 
-app.get("/", (req, res) => {
-  res.status(200).json({ message: "Hello World" });
+app.get("/", (req, res, next) => {
+  setTimeout(() => {
+    next(new Error("This is a test error"));
+  }, 1);
 });
 
 app.use("/api", checkAuthentication, router);
@@ -27,5 +29,14 @@ app.use("/api", checkAuthentication, router);
 app.post("/user", createNewUser);
 
 app.post("/sign-in", signInUser);
+
+// Error handling middleware for synchronous errors and async errors with next()
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({
+    message: "Internal Server Error",
+    error: err.message, // Send the error message in the response
+  });
+});
 
 export default app;

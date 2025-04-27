@@ -1,5 +1,4 @@
 import { Router } from "express";
-import jwt from "jsonwebtoken";
 import { validateRequest } from "./middlewares/validateRequest";
 import {
   createProductSchema,
