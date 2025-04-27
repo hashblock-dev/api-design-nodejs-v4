@@ -4,7 +4,9 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
+    "build": "tsc -p tsconfig.json",
     "dev": "nodemon src/index.ts",
+    "start": "node dist/index.js",
     "test": "jest"
   },
   "keywords": [],
